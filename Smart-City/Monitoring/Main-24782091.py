@@ -1,8 +1,7 @@
 import sys
+import Sensor_Simulator
 
 sys.path.append('D:/projekgit/projek3/Smart-City/Sensor')
-
-import Sensor_Simulator
 
 data = Sensor_Simulator.sensor_data()
 
