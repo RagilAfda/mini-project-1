@@ -1,3 +1,18 @@
+"""
+Nama Modul : Main-24782091.py
+
+Modul utama untuk mengambil dan menampilkan data sensor dari modul
+Sensor_Simulator
+
+fitur utama: menampilkan output berupa nilai acak mengenai kadar CO,
+partikulat udara, dan tingkat kebisingan
+
+Penulis: Ragil Afda Tripradana
+
+Tanggal: 23 Maret 2025
+"""
+
+
 from sys import path
 
 path.append('..\\projek3')
