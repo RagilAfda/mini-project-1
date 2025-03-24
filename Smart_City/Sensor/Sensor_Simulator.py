@@ -68,7 +68,7 @@ def sensor_data():  # fungsi pengumpulan data
     noise_level = kebisingan()
 
     return {
-        "Kadar karbon monoksida (CO)": co_level,
-        "Partikular udara µg/m³": oxygen_level,
+        "Kadar CO": co_level,
+        "Partikular udara": oxygen_level,
         "Kebisingan": noise_level
     }
