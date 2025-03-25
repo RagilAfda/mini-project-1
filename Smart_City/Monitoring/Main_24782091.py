@@ -17,9 +17,9 @@ from sys import path
 
 path.append('..\\projek3')
 
-from Smart_City.Sensor import Sensor_Simulator
+from Smart_City.Sensor.Sensor_Simulator import sensor_data
 
-data = Sensor_Simulator.sensor_data()
+data = sensor_data()
 
 print("Membuat data:")
 print(f"Karbon Monoksida: {data['Kadar CO']} ppm")
