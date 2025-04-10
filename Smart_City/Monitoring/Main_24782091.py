@@ -21,7 +21,7 @@ from Smart_City.Sensor.Sensor_Simulator import sensor_data
 
 data = sensor_data()
 
-print("Membuat data:")
+print("===  Status Kualitas Kota  ===")
 print(f"Karbon Monoksida: {data['Kadar CO']} ppm")
 print(f"Partikular Udara: {data['Partikular udara']} µg/m³")
 print(f"Kebisingan: {data['Kebisingan']} dB")
