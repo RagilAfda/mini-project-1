@@ -100,6 +100,19 @@ def semua_lokasi():
     """
     return lokasi_terdaftar  # berisi semua lokasi yang sudah terdaftar
 
+def data_gabungan():
+    """
+    Mengembalikan dictionary berisi data kualitas udara untuk setiap lokasi terdaftar.
+    
+    Returns:
+        dict: Format {lokasi: {"Kadar CO": float, "Partikular udara": int, "Kebisingan": int}}
+    """
+    data_lokasi = {}
+    for lokasi in lokasi_terdaftar:
+        data_lokasi[lokasi] = sensor_data()
+    return data_lokasi
+
+
 def cari_lokasi(keyword):
     """
     Mencari lokasi berdasarkan keyword yang diberikan user

@@ -35,7 +35,7 @@ def menu():
             print(hasil)
 
         elif opsi == "2":
-            data = sensor.data_lokasi()
+            data = sensor.data_gabungan()
             if not data:
                 print("Belum ada lokasi yang ditambahkan.")
             else:
