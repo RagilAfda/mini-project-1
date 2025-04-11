@@ -72,3 +72,21 @@ def sensor_data():  # fungsi pengumpulan data
         "Partikular udara": oxygen_level,
         "Kebisingan": noise_level
     }
+
+lokasi_terdaftar = [] # list kosong untuk save lokasi
+
+def tambah_lokasi(lokasi):
+    """
+    Menambahkan lokasi baru ke dalam daftar lokasi terdaftar.
+
+    Argument: lokasi.
+
+    Return: informasi pesan berhasil dan gagal.
+    """
+    lokasi = lokasi.strip().title()
+    if not lokasi:  # kondisi input user kosong
+        return "Lokasi tidak boleh kosong."
+    if lokasi in lokasi_terdaftar:  # kondisi lokasi yang sama
+        return f"Lokasi '{lokasi}' sudah terdaftar."
+    lokasi_terdaftar.append(lokasi)
+    return f"Lokasi '{lokasi}' berhasil ditambahkan."
