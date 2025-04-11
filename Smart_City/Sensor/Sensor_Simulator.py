@@ -90,3 +90,30 @@ def tambah_lokasi(lokasi):
         return f"Lokasi '{lokasi}' sudah terdaftar."
     lokasi_terdaftar.append(lokasi)
     return f"Lokasi '{lokasi}' berhasil ditambahkan."
+
+
+def semua_lokasi():
+    """
+    Mengembalikan daftar semua lokasi yang telah terdaftar.
+
+    Return: list yang berisi nama-nama lokasi
+    """
+    return lokasi_terdaftar  # berisi semua lokasi yang sudah terdaftar
+
+def cari_lokasi(keyword):
+    """
+    Mencari lokasi berdasarkan keyword yang diberikan user
+
+    Argument: 
+    keyword: kata kunci pencarian.
+
+    Return: 
+    list: daftar lokasi yang mengandung keywordnya.
+    """
+    keyword = keyword.strip().lower()
+    hasil_pencarian = []  # inisialisasi
+    for loc in lokasi_terdaftar:
+        if keyword in loc.lower():
+            hasil_pencarian.append(loc)
+
+    return hasil_pencarian
