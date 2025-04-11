@@ -22,8 +22,8 @@ from Smart_City.Sensor import Sensor_Simulator as sensor
 def menu():
     while True:
         print("\n=== MENU PEMANTAUAN KUALITAS KOTA ===")
-        print("1. Tambah Lokasi pemantauann")
-        print("2. Tampilkan Kualitas Udara di seuam lokasi")
+        print("1. Tambah Lokasi pemantauan")
+        print("2. Tampilkan Kualitas Udara di semua lokasi")
         print("3. Cari Lokasi")
         print("4. Keluar")
 
@@ -41,6 +41,7 @@ def menu():
             else:
                 for lokasi, nilai in data.items():
                     print("===  Status Kualitas Kota  ===")
+                    print(f"Lokasi: {lokasi}")
                     print(f"Karbon Monoksida: {nilai['Kadar CO']} ppm")
                     print(f"Partikular Udara: {nilai['Partikular udara']} µg/m³")
                     print(f"Kebisingan: {nilai['Kebisingan']} dB")
