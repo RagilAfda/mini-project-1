@@ -43,7 +43,7 @@ def menu():
                     print("===  Status Kualitas Kota  ===")
                     print(f"Lokasi: {lokasi}")
                     print(f"Karbon Monoksida: {nilai['Kadar CO']} ppm")
-                    print(f"Partikular Udara: {nilai['Partikular udara']} µg/m³")
+                    print(f"Partikular Udara: {nilai['Partikular udara']} {chr(181)}g/m{chr(179)}")
                     print(f"Kebisingan: {nilai['Kebisingan']} dB")
         
         elif opsi == "3":
