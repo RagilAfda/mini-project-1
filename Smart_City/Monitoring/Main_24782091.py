@@ -17,11 +17,51 @@ from sys import path
 
 path.append('..\\projek3')
 
-from Smart_City.Sensor.Sensor_Simulator import sensor_data
+from Smart_City.Sensor import Sensor_Simulator as sensor
 
-data = sensor_data()
+def menu():
+    while True:
+        print("\n=== MENU PEMANTAUAN KUALITAS KOTA ===")
+        print("1. Tambah Lokasi pemantauann")
+        print("2. Tampilkan Kualitas Udara di seuam lokasi")
+        print("3. Cari Lokasi")
+        print("4. Keluar")
 
-print("===  Status Kualitas Kota  ===")
-print(f"Karbon Monoksida: {data['Kadar CO']} ppm")
-print(f"Partikular Udara: {data['Partikular udara']} µg/m³")
-print(f"Kebisingan: {data['Kebisingan']} dB")
+        opsi = input("Pilih menu (1-4): ").strip()
+
+        if opsi == "1":
+            lokasi = input("Masukkan nama lokasi (format: kecamatan, kelurahan): ")
+            hasil = sensor.tambah_lokasi(lokasi)
+            print(hasil)
+
+        elif opsi == "2":
+            data = sensor.data_lokasi()
+            if not data:
+                print("Belum ada lokasi yang ditambahkan.")
+            else:
+                for lokasi, nilai in data.items():
+                    print("===  Status Kualitas Kota  ===")
+                    print(f"Karbon Monoksida: {nilai['Kadar CO']} ppm")
+                    print(f"Partikular Udara: {nilai['Partikular udara']} µg/m³")
+                    print(f"Kebisingan: {nilai['Kebisingan']} dB")
+        
+        elif opsi == "3":
+            keyword = input("Masukkan kata kunci pencarian lokasi: ")
+            result = sensor.cari_lokasi(keyword)
+            if result:
+                print("Lokasi ditemukan:")
+                for loc in result:
+                    print(f"> {loc}")
+            else:
+                print("Lokasi tidak ditemukan.")
+
+        elif opsi == "4":
+            print("Terima kasih! Program selesai.")
+            break
+
+        else:
+            print("Input tidak valid. Silakan masukkan angka 1-4.")
+
+
+if __name__ == "__main__":  # inisialisasi bahwa modul ini program utama
+    menu()
