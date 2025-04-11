@@ -92,14 +92,6 @@ def tambah_lokasi(lokasi):
     return f"Lokasi '{lokasi}' berhasil ditambahkan."
 
 
-def semua_lokasi():
-    """
-    Mengembalikan daftar semua lokasi yang telah terdaftar.
-
-    Return: list yang berisi nama-nama lokasi
-    """
-    return lokasi_terdaftar  # berisi semua lokasi yang sudah terdaftar
-
 def data_gabungan():
     """
     Mengembalikan dictionary berisi data kualitas udara untuk setiap lokasi terdaftar.
