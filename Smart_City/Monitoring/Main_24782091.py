@@ -20,6 +20,21 @@ path.append('..\\projek3')
 from Smart_City.Sensor import Sensor_Simulator as sensor
 
 def menu():
+    """
+    Fungsi utama untuk menampilkan menu pemantauan kualitas udara.
+
+    Fitur:
+    1. Menambahkan lokasi pemantauan baru
+    2. Menampilkan data kualitas udara semua lokasi
+    3. Mencari lokasi berdasarkan kata kunci
+    4. Keluar dari program
+
+    Fungsi ini akan:
+    - Memvalidasi input pengguna
+    - Menampilkan output sesuai pilihan
+    - Berjalan terus hingga pengguna memilih keluar (opsi 4)
+
+    """
     while True:
         print("\n=== MENU PEMANTAUAN KUALITAS KOTA ===")
         print("1. Tambah Lokasi pemantauan")
