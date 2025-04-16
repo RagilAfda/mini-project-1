@@ -1,9 +1,15 @@
+"""
+Modul: Main - Sistem Pemantauan Kualitas Udara
+Deskripsi: Program utama untuk interaksi pengguna dalam menambahkan dan melihat data kualitas udara dari berbagai lokasi menggunakan class Sensor dan Location.
+Tanggal pembuatan: 16 April 2025
+"""
 from sys import path
 path.append('..\\projekclone\\SmartCity')
 
 from Sensor.Sensor_Simulator import Sensor, Location
 
 def tampilkan_menu():
+    """Menampilkan menu utama ke layar."""
     print("\n=== Sistem Pemantauan Kualitas Udara ===")
     print("1. Tambah Data Lokasi")
     print("2. Tampilkan Semua Lokasi")
