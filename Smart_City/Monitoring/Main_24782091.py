@@ -1,83 +1,39 @@
-"""
-Nama Modul : Main-24782091.py
-
-Modul utama untuk mengambil dan menampilkan data sensor dari modul
-Sensor_Simulator
-
-fitur utama: menampilkan output berupa nilai acak mengenai kadar CO,
-partikulat udara, dan tingkat kebisingan
-
-Penulis: Ragil Afda Tripradana
-
-Tanggal: 23 Maret 2025
-"""
-
-
 from sys import path
+path.append('..\\projekclone\\SmartCity')
 
-path.append('..\\projek3')
+from Sensor.Sensor_Simulator import Sensor, Location
 
-from Smart_City.Sensor import Sensor_Simulator as sensor
+def tampilkan_menu():
+    print("\n=== Sistem Pemantauan Kualitas Udara ===")
+    print("1. Tambah Data Lokasi")
+    print("2. Tampilkan Semua Lokasi")
+    print("3. Keluar")
 
-def menu():
-    """
-    Fungsi utama untuk menampilkan menu pemantauan kualitas udara.
+lokasi_list = []
 
-    Fitur:
-    1. Menambahkan lokasi pemantauan baru
-    2. Menampilkan data kualitas udara semua lokasi
-    3. Mencari lokasi berdasarkan kata kunci
-    4. Keluar dari program
+while True:
+    tampilkan_menu()
+    pilihan = input("Pilih menu (1/2/3): ")
 
-    Fungsi ini akan:
-    - Memvalidasi input pengguna
-    - Menampilkan output sesuai pilihan
-    - Berjalan terus hingga pengguna memilih keluar (opsi 4)
+    if pilihan == "1":
+        kelurahan = input("Masukkan nama kelurahan: ")
+        kecamatan = input("Masukkan nama kecamatan: ")
 
-    """
-    while True:
-        print("\n=== MENU PEMANTAUAN KUALITAS KOTA ===")
-        print("1. Tambah Lokasi pemantauan")
-        print("2. Tampilkan Kualitas Udara di semua lokasi")
-        print("3. Cari Lokasi")
-        print("4. Keluar")
+        sensor_pm25 = Sensor(f"Sensor PM25 -", "PM25")
+        sensor_co = Sensor(f"Sensor CO -", "CO")
+        sensor_kebisingan = Sensor(f"Sensor Kebisingan -", "Kebisingan")
 
-        opsi = input("Pilih menu (1-4): ").strip()
+        lokasi_baru = Location(kelurahan, kecamatan, sensor_pm25, sensor_co, sensor_kebisingan)
+        lokasi_list.append(lokasi_baru)
+        print("\nData lokasi berhasil ditambahkan!")
 
-        if opsi == "1":
-            lokasi = input("Masukkan nama lokasi (format: kecamatan, kelurahan): ")
-            hasil = sensor.tambah_lokasi(lokasi)
-            print(hasil)
+    elif pilihan == "2":
+            print("\n=== Data Kualitas Udara Semua Lokasi ===")
+            for lokasi in lokasi_list:
+                print(lokasi.get_quality_info())
 
-        elif opsi == "2":
-            data = sensor.data_gabungan()
-            if not data:
-                print("Belum ada lokasi yang ditambahkan.")
-            else:
-                for lokasi, nilai in data.items():
-                    print("===  Status Kualitas Kota  ===")
-                    print(f"Lokasi: {lokasi}")
-                    print(f"Karbon Monoksida: {nilai['Kadar CO']} ppm")
-                    print(f"Partikular Udara: {nilai['Partikular udara']} {chr(181)}g/m{chr(179)}")
-                    print(f"Kebisingan: {nilai['Kebisingan']} dB")
-        
-        elif opsi == "3":
-            keyword = input("Masukkan kata kunci pencarian lokasi: ")
-            result = sensor.cari_lokasi(keyword)
-            if result:
-                print("Lokasi ditemukan:")
-                for loc in result:
-                    print(f"> {loc}")
-            else:
-                print("Lokasi tidak ditemukan.")
-
-        elif opsi == "4":
-            print("Terima kasih! Program selesai.")
-            break
-
-        else:
-            print("Input tidak valid. Silakan masukkan angka 1-4.")
-
-
-if __name__ == "__main__":  # inisialisasi bahwa modul ini program utama
-    menu()
+    elif pilihan == "3":
+        print("\nTerima kasih telah menggunakan sistem ini!")
+        break
+    else:
+        print("Pilihan tidak valid. Silakan pilih 1, 2, atau 3.")
