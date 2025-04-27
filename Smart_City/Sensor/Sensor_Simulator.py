@@ -21,21 +21,48 @@ class Sensor:
         self.nama_sensor = nama_sensor
         self.jenis_sensor = jenis_sensor
         self.data_sensor = self.generate_data()
+   
+    def __init__(self, nama_sensor, jenis_sensor):
+        """Inisialisasi sensor dengan nama dan jenis."""
+        self.nama_sensor = nama_sensor
+        self.jenis_sensor = jenis_sensor
+        self.data_sensor = None
+    
+    def kadar_co(self):
+        """Mengenerate kadar CO secara acak dalam satuan ppm."""
+        nilai = round(random.uniform(0.1, 50.0), 2)
+        if not (0 <= nilai <= 100):
+            raise ValueError(f"Nilai CO tidak valid: {nilai}")
+        return nilai
+    
+    def partikular_udara(self):
+        """Mengenerate kadar partikulat (PM2.5) secara acak."""
+        nilai = random.randint(10, 200)
+        if not (0 <= nilai <= 500):
+            raise ValueError(f"Nilai PM2.5 tidak valid: {nilai}")
+        return nilai
+    
+    def kebisingan(self):
+        """Mengenerate tingkat kebisingan secara acak dalam satuan dB."""
+        nilai = random.randint(40, 100)
+        if not (30 <= nilai <= 150):
+            raise ValueError(f"Nilai kebisingan tidak valid: {nilai}")
+        return nilai
 
-    def generate_data(self):
-        """Menghasilkan data acak berdasarkan jenis sensor."""
-        if self.jenis_sensor == "PM25":
-            return round(random.uniform(0, 150), 2)  
-        elif self.jenis_sensor == "CO":
-            return round(random.uniform(0, 10), 2)  
-        elif self.jenis_sensor == "Kebisingan":
-            return round(random.uniform(30, 100), 2) 
-        else:
-            return 0
-
-    def get_info(self):
-        """Mengembalikan informasi sensor dalam format string."""
-        return f"{self.nama_sensor} ({self.jenis_sensor}): {self.data_sensor}"
+    def update_data_sensor(self):
+        """Memperbarui data sensor berdasarkan jenis sensor."""
+        if self.jenis_sensor == "sensor CO":
+            self.data_sensor = self.kadar_co()
+        elif self.jenis_sensor == "sensor PM25":
+            self.data_sensor = self.partikular_udara()
+        elif self.jenis_sensor == "sensor kebisingan":
+            self.data_sensor = self.kebisingan()
+    
+    def get_info_sensor(self):
+        """Mendapatkan informasi dasar dari sensor."""
+        if self.data_sensor is None:
+            return f"{self.nama_sensor} - Data belum diupdate"
+        return f"{self.nama_sensor}: {self.data_sensor}"
 
 class Location:
     """
