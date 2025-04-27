@@ -101,7 +101,7 @@ class COSensor(Sensor):
     def __init__(self, nama_sensor):
         """Inisialisasi sensor CO."""
         super().__init__(nama_sensor, "sensor CO")
-    
+
     def cek_ambang_batas(self):
         """Memeriksa apakah kadar CO melebihi ambang batas aman."""
         if self.data_sensor is None:
@@ -111,7 +111,7 @@ class COSensor(Sensor):
             return "Aman"
         else:
             return "Berbahaya"
-    
+
     def get_info_sensor(self):
         """Mendapatkan informasi lengkap sensor CO termasuk status ambang batas."""
         info_dasar = super().get_info_sensor()
@@ -126,7 +126,7 @@ class NoiseSensor(Sensor):
     def __init__(self, nama_sensor):
         """Inisialisasi sensor kebisingan."""
         super().__init__(nama_sensor, "sensor kebisingan")
-    
+
     def analisis_kebisingan(self):
         """Menganalisis tingkat kebisingan berdasarkan nilai dB."""
         if self.data_sensor is None:
@@ -138,7 +138,7 @@ class NoiseSensor(Sensor):
             return "Normal"
         else:
             return "Tinggi"
-    
+
     def get_info_sensor(self):
         """Mendapatkan informasi lengkap sensor kebisingan termasuk analisis tingkat."""
         info_dasar = super().get_info_sensor()
@@ -147,29 +147,27 @@ class NoiseSensor(Sensor):
         return info_dasar
 
 class Location:
-    """
-    Class untuk merepresentasikan lokasi pemantauan kualitas udara.
-
-    Atribut:
-        kelurahan : Nama kelurahan.
-        kecamatan : Nama kecamatan.
-        sensor_pm25 : Objek sensor PM25.
-        sensor_co : Objek sensor CO.
-        sensor_kebisingan : Objek sensor Kebisingan.
-    """
-    def __init__(self, kelurahan, kecamatan, sensor_pm25, sensor_co, sensor_kebisingan):
-        """Inisialisasi data lokasi dan sensor-sensornya."""
+    """Kelas untuk merepresentasikan suatu lokasi dengan beberapa sensor kualitas udara. """
+    def __init__(self, kelurahan, kecamatan):
+        """Inisialisasi lokasi dengan kelurahan dan kecamatan."""
         self.kelurahan = kelurahan
         self.kecamatan = kecamatan
-        self.sensor_pm25 = sensor_pm25
-        self.sensor_co = sensor_co
-        self.sensor_kebisingan = sensor_kebisingan
+        self.sensor_pm25 = PM25Sensor(f"PM25_{kelurahan}")
+        self.sensor_co = COSensor(f"CO_{kelurahan}")
+        self.sensor_kebisingan = NoiseSensor(f"NOISE_{kelurahan}")
 
-    def get_quality_info(self):
-        """Mengembalikan informasi kualitas udara dari semua sensor di lokasi."""
-        return (
-            f"Lokasi: {self.kelurahan}, {self.kecamatan}\n"
-            f"  - {self.sensor_pm25.get_info()} {chr(181)}g/m{chr(179)}\n"
-            f"  - {self.sensor_co.get_info()}PPM\n"
-            f"  - {self.sensor_kebisingan.get_info()}dB\n"
-        )
+    def update_all_sensors(self):
+        """Memperbarui data semua sensor yang ada di lokasi ini."""
+        self.sensor_pm25.update_data_sensor()
+        self.sensor_co.update_data_sensor()
+        self.sensor_kebisingan.update_data_sensor()
+
+    def get_kualitas_udara(self):
+        """Mendapatkan informasi lengkap kualitas udara di suatu lokasi."""
+        self.update_all_sensors()
+        info = f"Lokasi: {self.kelurahan}, {self.kecamatan}\n"
+        info += f"1. {self.sensor_pm25.get_info_sensor()}\n"
+        info += f"2. {self.sensor_co.get_info_sensor()}\n"
+        info += f"3. {self.sensor_kebisingan.get_info_sensor()}"
+
+        return info
