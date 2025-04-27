@@ -4,42 +4,71 @@ Deskripsi: Program utama untuk interaksi pengguna dalam menambahkan dan melihat 
 Tanggal pembuatan: 16 April 2025
 """
 from sys import path
-path.append('..\\projekclone\\SmartCity')
+path.append('..\\projek3\\Smart_City')
 
-from Sensor.Sensor_Simulator import Sensor, Location
+from Sensor.Sensor_Simulator import Location
 
-def tampilkan_menu():
-    """Menampilkan menu utama ke layar."""
-    print("\n=== Sistem Pemantauan Kualitas Udara ===")
-    print("1. Tambah Data Lokasi")
-    print("2. Tampilkan Semua Lokasi")
-    print("3. Keluar")
+def main():
+    daftar_lokasi = []
 
-lokasi_list = []
+    while True:
+        print("\n=== SISTEM PEMANTAUAN KUALITAS UDARA ===")
+        print("1. Tambah Lokasi Pemantauan")
+        print("2. Lihat Status Semua Lokasi")
+        print("3. Cari Lokasi")
+        print("4. Keluar")
 
-while True:
-    tampilkan_menu()
-    pilihan = input("Pilih menu (1/2/3): ")
+        pilihan = input("Pilih menu (1-4): ")
 
-    if pilihan == "1":
-        kelurahan = input("Masukkan nama kelurahan: ")
-        kecamatan = input("Masukkan nama kecamatan: ")
+        try:
+            if pilihan not in ["1", "2", "3", "4"]:
+                raise ValueError("Pilihan tidak valid. Silakan pilih antara 1-4.")
 
-        sensor_pm25 = Sensor(f"Sensor PM25 -", "PM25")
-        sensor_co = Sensor(f"Sensor CO -", "CO")
-        sensor_kebisingan = Sensor(f"Sensor Kebisingan -", "Kebisingan")
+            if pilihan == "1":
+                print("\nTAMBAH LOKASI PEMANTAUAN")
+                kelurahan = input("Masukkan nama kelurahan: ")
+                kecamatan = input("Masukkan nama kecamatan: ")
 
-        lokasi_baru = Location(kelurahan, kecamatan, sensor_pm25, sensor_co, sensor_kebisingan)
-        lokasi_list.append(lokasi_baru)
-        print("\nData lokasi berhasil ditambahkan!")
+                if not kelurahan.strip() or not kecamatan.strip():
+                    raise ValueError("Nama kelurahan dan kecamatan tidak boleh kosong.")
 
-    elif pilihan == "2":
-            print("\n=== Data Kualitas Udara Semua Lokasi ===")
-            for lokasi in lokasi_list:
-                print(lokasi.get_quality_info())
+                lokasi_baru = Location(kelurahan.strip(), kecamatan.strip())
+                daftar_lokasi.append(lokasi_baru)
+                print(f"Lokasi {kelurahan}, {kecamatan} berhasil ditambahkan!")
 
-    elif pilihan == "3":
-        print("\nTerima kasih telah menggunakan sistem ini!")
-        break
-    else:
-        print("Pilihan tidak valid. Silakan pilih 1, 2, atau 3.")
+            elif pilihan == "2":
+                print("\nSTATUS KUALITAS UDARA SEMUA LOKASI")
+                if not daftar_lokasi:
+                    print("Belum ada lokasi yang terdaftar!")
+                else:
+                    for lokasi in daftar_lokasi:
+                        print("\n" + lokasi.get_kualitas_udara())
+                        print("-----------------------------")
+
+            elif pilihan == "3":
+                print("\nCARI LOKASI")
+                if not daftar_lokasi:
+                    print("Belum ada lokasi yang terdaftar!")
+                else:
+                    keyword = input("Masukkan nama kelurahan/kecamatan: ").lower().strip()
+                    ditemukan = False
+                    for lokasi in daftar_lokasi:
+                        if (keyword in lokasi.kelurahan.lower() or 
+                            keyword in lokasi.kecamatan.lower()):
+                            print("\n" + lokasi.get_kualitas_udara())
+                            print("-----------------------------")
+                            ditemukan = True
+                    if not ditemukan:
+                        print("Lokasi tidak ditemukan!")
+
+            elif pilihan == "4":
+                print("Program selesai. Sampai jumpa!")
+                break
+
+        except ValueError as ve:
+            print(f"Input Error: {ve}")
+        except Exception as e:
+            print(f"Terjadi kesalahan tak terduga: {e}")
+
+if __name__ == "__main__":
+    main()
