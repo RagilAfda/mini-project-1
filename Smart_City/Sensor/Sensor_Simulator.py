@@ -63,6 +63,88 @@ class Sensor:
         if self.data_sensor is None:
             return f"{self.nama_sensor} - Data belum diupdate"
         return f"{self.nama_sensor}: {self.data_sensor}"
+    
+class PM25Sensor(Sensor):
+    """Kelas khusus untuk sensor partikulat PM2.5 yang mewarisi dari kelas Sensor."""
+
+    def __init__(self, nama_sensor):
+        """Inisialisasi sensor PM2.5."""
+        super().__init__(nama_sensor, "sensor PM25")
+    
+    def analisis_kualitas(self):
+        """Menganalisis kualitas udara berdasarkan kadar PM2.5."""
+        if self.data_sensor is None:
+            return "Data belum diupdate"
+        
+        if self.data_sensor <= 50:
+            return "Baik"
+        elif self.data_sensor <= 100:
+            return "Sedang"
+        else:
+            return "Berbahaya"
+    
+    def get_info_sensor(self):
+        """Mendapatkan informasi lengkap sensor PM2.5 termasuk analisis kualitas.
+
+        Returns:
+            str: String berisi informasi dasar sensor plus analisis kualitas udara.
+        """
+        info_dasar = super().get_info_sensor()
+        if self.data_sensor is not None:
+            return f"{info_dasar} | Kualitas: {self.analisis_kualitas()}"
+        return info_dasar
+
+
+class COSensor(Sensor):
+    """Kelas khusus untuk sensor karbon monoksida (CO) yang mewarisi dari kelas Sensor."""
+
+    def __init__(self, nama_sensor):
+        """Inisialisasi sensor CO."""
+        super().__init__(nama_sensor, "sensor CO")
+    
+    def cek_ambang_batas(self):
+        """Memeriksa apakah kadar CO melebihi ambang batas aman."""
+        if self.data_sensor is None:
+            return "Data belum diupdate"
+        
+        if self.data_sensor <= 9:
+            return "Aman"
+        else:
+            return "Berbahaya"
+    
+    def get_info_sensor(self):
+        """Mendapatkan informasi lengkap sensor CO termasuk status ambang batas."""
+        info_dasar = super().get_info_sensor()
+        if self.data_sensor is not None:
+            return f"{info_dasar} | Status: {self.cek_ambang_batas()}"
+        return info_dasar
+
+
+class NoiseSensor(Sensor):
+    """Kelas khusus untuk sensor kebisingan yang mewarisi dari kelas Sensor."""
+
+    def __init__(self, nama_sensor):
+        """Inisialisasi sensor kebisingan."""
+        super().__init__(nama_sensor, "sensor kebisingan")
+    
+    def analisis_kebisingan(self):
+        """Menganalisis tingkat kebisingan berdasarkan nilai dB."""
+        if self.data_sensor is None:
+            return "Data belum diupdate"
+        
+        if self.data_sensor <= 55:
+            return "Rendah"
+        elif self.data_sensor <= 70:
+            return "Normal"
+        else:
+            return "Tinggi"
+    
+    def get_info_sensor(self):
+        """Mendapatkan informasi lengkap sensor kebisingan termasuk analisis tingkat."""
+        info_dasar = super().get_info_sensor()
+        if self.data_sensor is not None:
+            return f"{info_dasar} | Tingkat: {self.analisis_kebisingan()}"
+        return info_dasar
 
 class Location:
     """
