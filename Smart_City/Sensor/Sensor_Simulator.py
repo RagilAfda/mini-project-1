@@ -54,6 +54,8 @@ class Sensor:
             self.data_sensor = self.partikular_udara()
         elif self.jenis_sensor == "sensor kebisingan":
             self.data_sensor = self.kebisingan()
+        
+        self.waktu = datetime.now()
     
     def get_info_sensor(self):
         """Mendapatkan informasi dasar dari sensor."""
