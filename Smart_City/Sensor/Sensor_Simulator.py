@@ -61,7 +61,8 @@ class Sensor:
         """Mendapatkan informasi dasar dari sensor."""
         if self.data_sensor is None:
             return f"{self.nama_sensor} - Data belum diupdate"
-        return f"{self.nama_sensor}: {self.data_sensor}"
+        waktu = self.waktu.strftime('%Y-%M-%d %H:%M:%S') if self.waktu else "N/A"
+        return f"{self.nama_sensor}: {self.data_sensor} (Dicatat: {waktu}"
     
 class PM25Sensor(Sensor):
     """Kelas khusus untuk sensor partikulat PM2.5 yang mewarisi dari kelas Sensor."""
