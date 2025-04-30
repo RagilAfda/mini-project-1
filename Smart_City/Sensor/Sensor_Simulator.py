@@ -23,6 +23,7 @@ class Sensor:
         self.nama_sensor = nama_sensor
         self.jenis_sensor = jenis_sensor
         self.data_sensor = None
+        self.waktu = None
     
     def kadar_co(self):
         """Mengenerate kadar CO secara acak dalam satuan ppm."""
