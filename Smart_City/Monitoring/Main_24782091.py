@@ -7,6 +7,8 @@ from sys import path
 path.append('..\\projek3\\Smart_City')
 
 from Sensor.Sensor_Simulator import Location
+from datetime import datetime, timedelta
+import random
 
 def main():
     daftar_lokasi = []
