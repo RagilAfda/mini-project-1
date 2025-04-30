@@ -10,7 +10,7 @@ from Sensor.Sensor_Simulator import Location
 from datetime import datetime, timedelta
 import random
 
-def generator_data_sensor(jenis, durasi_menit=1, interval_detik=30):
+def generator_data_sensor(jenis, durasi_menit=1, interval_detik=5):
     """
     Generator untuk menghasilkan data sensor acak tiap interval dalam durasi tertentu.
     """
@@ -90,7 +90,7 @@ def main():
                 if jenis not in ["sensor CO", "sensor PM25", "sensor kebisingan"]:
                     print("Jenis sensor tidak valid.")
                 else:
-                    print(f"Menampilkan riwayat data simulasi selama 1 jam terakhir (interval 5 detik) untuk {jenis}...\n")
+                    print(f"Menampilkan riwayat data simulasi selama 1 menit terakhir (interval 5 detik) untuk {jenis}...\n")
                     riwayat_data.clear()
                     for data in generator_data_sensor(jenis):
                         riwayat_data.append(data)
