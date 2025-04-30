@@ -10,6 +10,25 @@ from Sensor.Sensor_Simulator import Location
 from datetime import datetime, timedelta
 import random
 
+def generator_data_sensor(jenis, durasi_menit=1, interval_detik=30):
+    """
+    Generator untuk menghasilkan data sensor acak tiap interval dalam durasi tertentu.
+    """
+    waktu_awal = datetime.now() - timedelta(minutes=durasi_menit)
+    waktu_saat_ini = waktu_awal
+    while waktu_saat_ini <= datetime.now():
+        data = {
+            "waktu": waktu_saat_ini.strftime("%Y-%m-%d %H:%M:%S"),
+            "jenis": jenis,
+            "nilai": (
+                round(random.uniform(0.1, 50.0), 2) if jenis == "sensor CO" else
+                random.randint(10, 200) if jenis == "sensor PM25" else
+                random.randint(40, 100)
+            )
+        }
+        yield data
+        waktu_saat_ini += timedelta(seconds=interval_detik)
+
 def main():
     daftar_lokasi = []
 
