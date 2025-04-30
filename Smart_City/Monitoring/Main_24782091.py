@@ -31,6 +31,7 @@ def generator_data_sensor(jenis, durasi_menit=1, interval_detik=30):
 
 def main():
     daftar_lokasi = []
+    riwayat_data = []
 
     while True:
         print("\n=== SISTEM PEMANTAUAN KUALITAS UDARA ===")
