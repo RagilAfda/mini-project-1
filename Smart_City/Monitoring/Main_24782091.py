@@ -37,12 +37,13 @@ def main():
         print("1. Tambah Lokasi Pemantauan")
         print("2. Lihat Status Semua Lokasi")
         print("3. Cari Lokasi")
-        print("4. Keluar")
+        print("4. Riwayat sensor beberapa waktu terakhir")
+        print("5. Keluar")
 
         pilihan = input("Pilih menu (1-4): ")
 
         try:
-            if pilihan not in ["1", "2", "3", "4"]:
+            if pilihan not in ["1", "2", "3", "4", "5"]:
                 raise ValueError("Pilihan tidak valid. Silakan pilih antara 1-4.")
 
             if pilihan == "1":
@@ -81,8 +82,21 @@ def main():
                             ditemukan = True
                     if not ditemukan:
                         print("Lokasi tidak ditemukan!")
-
+                
             elif pilihan == "4":
+                print("\nRIWAYAT DATA SENSOR")
+                jenis = input("Masukkan jenis sensor (sensor CO / sensor PM25 / sensor kebisingan): ").strip()
+                if jenis not in ["sensor CO", "sensor PM25", "sensor kebisingan"]:
+                    print("Jenis sensor tidak valid.")
+                else:
+                    print(f"Menampilkan riwayat data simulasi selama 1 jam terakhir (interval 5 detik) untuk {jenis}...\n")
+                    riwayat_data.clear()
+                    for data in generator_data_sensor(jenis):
+                        riwayat_data.append(data)
+                        print(f"{data['waktu']} | {data['jenis']} : {data['nilai']}")
+                    print(f"\nTotal data: {len(riwayat_data)}")
+
+            elif pilihan == "5":
                 print("Program selesai. Sampai jumpa!")
                 break
 
