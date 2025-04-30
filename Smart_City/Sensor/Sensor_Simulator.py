@@ -17,11 +17,6 @@ class Sensor:
         jenis_sensor : Jenis sensor (PM25, CO, Kebisingan).
         data_sensor : Data hasil pengukuran sensor.
     """
-    def __init__(self, nama_sensor, jenis_sensor):
-        """Inisialisasi atribut dan generate data sensor."""
-        self.nama_sensor = nama_sensor
-        self.jenis_sensor = jenis_sensor
-        self.data_sensor = self.generate_data()
    
     def __init__(self, nama_sensor, jenis_sensor):
         """Inisialisasi sensor dengan nama dan jenis."""
