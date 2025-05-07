@@ -8,6 +8,7 @@ path.append('..\\projek3\\Smart_City')
 
 from Sensor.Sensor_Simulator import Location, COSensor, PM25Sensor, NoiseSensor
 from datetime import datetime, timedelta
+import csv 
 
 
 def generator_data_sensor(jenis, durasi_menit=1, interval_detik=10):
@@ -45,7 +46,8 @@ def main():
         print("3. Cari Lokasi")
         print("4. Riwayat sensor beberapa waktu terakhir")
         print("5. Lihat Riwayat Ringkasan Sensor")
-        print("6. Keluar")
+        print("6. Mengunduh data dalam bentuk CSV")
+        print("7. Keluar")
 
         pilihan = input("Pilih menu (1-4): ")
 
@@ -157,6 +159,24 @@ def main():
                         i += 1
 
             elif pilihan == "6":
+                nama_file = input("Masukkan nama file CSV (misal: ringkasan.csv): ").strip()
+                with open(nama_file, "w") as file:
+                    writer = csv.writer(file)
+                    writer.writerow(["Lokasi", "Jenis Sensor", "Tertinggi", "Terendah", "Rata-rata"])
+                    for data in riwayat_ringkasan:
+                        lokasi = data['lokasi']
+                        for jenis, nilai in data['sensor'].items():
+                            writer.writerow([
+                                lokasi,
+                                jenis,
+                                nilai['maksimum'],
+                                nilai['minimum'],
+                                nilai['rata_rata']
+                                ])
+                        print(f"Data ringkasan berhasil disimpan dalam file '{nama_file}'.")
+
+
+            elif pilihan == "7":
                 print("Program selesai. Sampai jumpa!")
                 break
 
