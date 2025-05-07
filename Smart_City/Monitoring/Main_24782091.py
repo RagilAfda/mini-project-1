@@ -167,7 +167,7 @@ def main():
                                 nilai['minimum'],
                                 nilai['rata_rata']
                                 ])
-                        print(f"Data ringkasan berhasil disimpan dalam file '{nama_file}'.")
+                print(f"Data ringkasan berhasil disimpan dalam file '{nama_file}'.")
 
 
             elif pilihan == "7":
