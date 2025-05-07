@@ -36,6 +36,7 @@ def generator_data_sensor(jenis, durasi_menit=1, interval_detik=10):
 def main():
     daftar_lokasi = []
     riwayat_data = []
+    riwayat_ringkasan = []
 
     while True:
         print("\n=== SISTEM PEMANTAUAN KUALITAS UDARA ===")
@@ -43,12 +44,13 @@ def main():
         print("2. Lihat Status Semua Lokasi")
         print("3. Cari Lokasi")
         print("4. Riwayat sensor beberapa waktu terakhir")
-        print("5. Keluar")
+        print("5. Lihat Riwayat Ringkasan Sensor")
+        print("6. Keluar")
 
         pilihan = input("Pilih menu (1-4): ")
 
         try:
-            if pilihan not in ["1", "2", "3", "4", "5"]:
+            if pilihan not in ["1", "2", "3", "4", "5", "6"]:
                 raise ValueError("Pilihan tidak valid. Silakan pilih antara 1-4.")
 
             if pilihan == "1":
@@ -89,46 +91,72 @@ def main():
                         print("Lokasi tidak ditemukan!")
                 
             elif pilihan == "4":
-                print("\nRIWAYAT DATA SENSOR")
+                print("\nRIWAYAT DATA SENSOR UNTUK SEMUA JENIS SENSOR")
 
                 if not daftar_lokasi:
                     print("Belum ada lokasi yang terdaftar!")
                     continue
 
-                for i, lokasi in enumerate(daftar_lokasi):
-                    print(f"{i+1}. {lokasi.kelurahan}, {lokasi.kecamatan}")
+                i = 1
+                for lokasi in daftar_lokasi:
+                    print(f"{i}. {lokasi.kelurahan}, {lokasi.kecamatan}")
+                    i += 1
+
                 try:
-                    index_lokasi = int(input("Pilih lokasi (nomor): ")) - 1
-                    if not (0 <= index_lokasi < len(daftar_lokasi)):
-                        raise ValueError("Nomor lokasi tidak valid.")
-                    lokasi_dipilih = daftar_lokasi[index_lokasi]
-                except ValueError as ve:
-                    print(f"Input Error: {ve}")
-                    continue
+                    idx = int(input("Pilih lokasi (nomor): ")) - 1
+                    lokasi = daftar_lokasi[idx]
 
-                jenis = input("Masukkan jenis sensor (sensor CO / sensor PM25 / sensor kebisingan): ").strip()
-                if jenis not in ["sensor CO", "sensor PM25", "sensor kebisingan"]:
-                    print("Jenis sensor tidak valid.")
-                else:
-                    print(f"\nMenampilkan data simulasi 1 menit terakhir (interval 10 detik) untuk {jenis} di lokasi {lokasi_dipilih.kelurahan}, {lokasi_dipilih.kecamatan}...\n")
-                    riwayat_data.clear()
-                    nilai_list = []
+                    jenis_sensor_list = ["sensor CO", "sensor PM25", "sensor kebisingan"]
+                    ringkasan_lokasi = {
+                        "lokasi": f"{lokasi.kelurahan}, {lokasi.kecamatan}",
+                        "sensor": {}
+                    }
 
-                    for i, data in enumerate(generator_data_sensor(jenis, durasi_menit=1, interval_detik=10)):
-                        data["kelurahan"] = lokasi_dipilih.kelurahan
-                        data["kecamatan"] = lokasi_dipilih.kecamatan
-                        riwayat_data.append(data)
-                        nilai_list.append(data["nilai"])
-                        print(f"Data ke-{i+1}: {data['waktu']} | {data['jenis']} : {data['nilai']} | Lokasi: {data['kelurahan']}, {data['kecamatan']}")
+                    for jenis in jenis_sensor_list:
+                        print(f"\nData 1 menit terakhir tiap 10 detik untuk {jenis} di {lokasi.kelurahan}, {lokasi.kecamatan}:\n")
+                        riwayat_data.clear()
+                        nilai_list = []
 
-                    if nilai_list:
-                        print("\n--- RINGKASAN ---")
-                        print(f"  Tertinggi : {max(nilai_list)}")
-                        print(f"  Terendah  : {min(nilai_list)}")
-                        print(f"  Rata-rata: {round(sum(nilai_list)/len(nilai_list), 2)}")
-                        print(f"\nTotal data: {len(nilai_list)}")
+                        j = 1
+                        for data in generator_data_sensor(jenis, 1, 10):
+                            data.update({
+                                "kelurahan": lokasi.kelurahan,
+                                "kecamatan": lokasi.kecamatan
+                            })
+                            riwayat_data.append(data)
+                            nilai_list.append(data["nilai"])
+                            print(f"Data ke-{j}: {data['waktu']} | {data['jenis']} : {data['nilai']} | Lokasi: {data['kelurahan']}, {data['kecamatan']}")
+                            j += 1
 
+                        if nilai_list:
+                            ringkasan_lokasi["sensor"][jenis] = {
+                                "maksimum": max(nilai_list),
+                                "minimum": min(nilai_list),
+                                "rata_rata": round(sum(nilai_list)/len(nilai_list), 2)
+                            }
+
+                    riwayat_ringkasan.append(ringkasan_lokasi)
+
+                except (ValueError, IndexError):
+                    print("Input tidak valid.")
+            
             elif pilihan == "5":
+                print("\n=== RINGKASAN RIWAYAT SENSOR ===")
+                if not riwayat_ringkasan:
+                    print("Belum ada data ringkasan yang tersimpan.")
+                else:
+                    i = 1
+                    for r in riwayat_ringkasan:
+                        print(f"\nRingkasan ke-{i}:")
+                        print(f"Lokasi: {r['lokasi']}")
+                        for jenis, nilai in r["sensor"].items():
+                            print(f"- {jenis}:")
+                            print(f"    Tertinggi : {nilai['maksimum']}")
+                            print(f"    Terendah  : {nilai['minimum']}")
+                            print(f"    Rata-rata : {nilai['rata_rata']}")
+                        i += 1
+
+            elif pilihan == "6":
                 print("Program selesai. Sampai jumpa!")
                 break
 
