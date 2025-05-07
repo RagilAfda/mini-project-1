@@ -43,18 +43,19 @@ def main():
         print("\n=== SISTEM PEMANTAUAN KUALITAS UDARA ===")
         print("1. Tambah Lokasi Pemantauan")
         print("2. Lihat Status Semua Lokasi")
-        print("3. Cari Lokasi")
+        print("3. Lihat Lokasi")
         print("4. Riwayat sensor beberapa waktu terakhir")
         print("5. Lihat Riwayat Ringkasan Sensor")
         print("6. Mengunduh data dalam bentuk CSV")
         print("7. Melihat file")
-        print("8. Keluar")
+        print("8. Mencari lokasi dan datanya")
+        print("9. Keluar")
 
-        pilihan = input("Pilih menu (1-8): ")
+        pilihan = input("Pilih menu (1-9): ")
 
         try:
-            if pilihan not in ["1", "2", "3", "4", "5", "6", "7", "8"]:
-                raise ValueError("Pilihan tidak valid. Silakan pilih antara 1-4.")
+            if pilihan not in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
+                raise ValueError("Pilihan tidak valid. Silakan pilih antara 1-9.")
 
             if pilihan == "1":
                 print("\nTAMBAH LOKASI PEMANTAUAN")
@@ -78,21 +79,13 @@ def main():
                         print("-----------------------------")
 
             elif pilihan == "3":
-                print("\nCARI LOKASI")
+                print("\n=== DAFTAR LOKASI ===")
                 if not daftar_lokasi:
-                    print("Belum ada lokasi yang terdaftar!")
+                    print("Belum ada lokasi yang tersimpan.")
                 else:
-                    keyword = input("Masukkan nama kelurahan/kecamatan: ").lower().strip()
-                    ditemukan = False
                     for lokasi in daftar_lokasi:
-                        if (keyword in lokasi.kelurahan.lower() or 
-                            keyword in lokasi.kecamatan.lower()):
-                            print("\n" + lokasi.get_kualitas_udara())
-                            print("-----------------------------")
-                            ditemukan = True
-                    if not ditemukan:
-                        print("Lokasi tidak ditemukan!")
-                
+                        print(f"{lokasi.kelurahan}, {lokasi.kecamatan}")
+
             elif pilihan == "4":
                 print("\nRIWAYAT DATA SENSOR UNTUK SEMUA JENIS SENSOR")
 
@@ -186,6 +179,21 @@ def main():
                         print(baris)
 
             elif pilihan == "8":
+                print("\nCARI LOKASI (VERSI LAMBDA FUNCTION)")
+                if not daftar_lokasi:
+                    print("Belum ada lokasi yang terdaftar!")
+                else:
+                    keyword = input("Masukkan nama kelurahan/kecamatan: ").lower().strip()
+                    hasil = list(filter(lambda l: keyword in l.kelurahan.lower() or keyword in l.kecamatan.lower(), daftar_lokasi))
+                    
+                    if hasil:
+                        for lokasi in hasil:
+                            print("\n" + lokasi.get_kualitas_udara())
+                            print("-----------------------------")
+                    else:
+                        print("Lokasi tidak ditemukan!")
+
+            elif pilihan == "9":
                 print("Program selesai. Sampai jumpa!")
                 break
 
