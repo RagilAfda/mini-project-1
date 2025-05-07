@@ -171,12 +171,15 @@ def main():
 
 
             elif pilihan == "7":
-                nama_file_unduhan = input("Masukkan nama yang telah di unduh")
-                with open(nama_file_unduhan, "r") as file:
-                    reader = csv.reader(file)
-                    print("isi file")
-                    for baris in reader:
-                        print(baris)
+                nama_file_unduhan = input("Masukkan nama yang telah di unduh : ")
+                try:
+                    with open(nama_file_unduhan, "r") as file:
+                        reader = csv.reader(file)
+                        print("isi file")
+                        for baris in reader:
+                            print(baris)
+                except FileNotFoundError:
+                    print(f"file {nama_file_unduhan} tidak ditemukan ")
 
             elif pilihan == "8":
                 print("\nCARI LOKASI (VERSI LAMBDA FUNCTION)")
@@ -199,8 +202,6 @@ def main():
 
         except ValueError as ve:
             print(f"Input Error: {ve}")
-        except Exception as e:
-            print(f"Terjadi kesalahan tak terduga: {e}")
 
 if __name__ == "__main__":
     main()
