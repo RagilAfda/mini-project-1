@@ -47,12 +47,13 @@ def main():
         print("4. Riwayat sensor beberapa waktu terakhir")
         print("5. Lihat Riwayat Ringkasan Sensor")
         print("6. Mengunduh data dalam bentuk CSV")
-        print("7. Keluar")
+        print("7. Melihat file")
+        print("8. Keluar")
 
-        pilihan = input("Pilih menu (1-4): ")
+        pilihan = input("Pilih menu (1-8): ")
 
         try:
-            if pilihan not in ["1", "2", "3", "4", "5", "6"]:
+            if pilihan not in ["1", "2", "3", "4", "5", "6", "7", "8"]:
                 raise ValueError("Pilihan tidak valid. Silakan pilih antara 1-4.")
 
             if pilihan == "1":
@@ -177,6 +178,14 @@ def main():
 
 
             elif pilihan == "7":
+                nama_file_unduhan = input("Masukkan nama yang telah di unduh")
+                with open(nama_file_unduhan, "r") as file:
+                    reader = csv.reader(file)
+                    print("isi file")
+                    for baris in reader:
+                        print(baris)
+
+            elif pilihan == "8":
                 print("Program selesai. Sampai jumpa!")
                 break
 
